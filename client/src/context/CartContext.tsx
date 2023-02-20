@@ -1,12 +1,18 @@
-import React, { createContext, useEffect, useReducer, useState } from "react"
+import React, { createContext, Reducer, useEffect, useReducer } from "react"
+import {
+    AddedProduct,
+    CartActionType,
+    CartContextType,
+    ContextProviderProps,
+} from "../interfaces/interfaces"
 
-const CartContext = createContext()
+const CartContext = createContext<CartContextType | undefined>(undefined)
 
-const reducer = (state, action) => {
-    function getTotalPrice(items) {
+const reducer: Reducer<CartContextType, CartActionType> = (state, action) => {
+    function getTotalPrice(items: AddedProduct[]) {
         let finalPrice = 0
         items.map(
-            (item) =>
+            (item: AddedProduct) =>
                 (finalPrice +=
                     item.quantity *
                     (item.onSale ? item.discountedPrice : item.price))
@@ -20,7 +26,7 @@ const reducer = (state, action) => {
         case "addItem":
             const newItem = action.payload
             const existingItemIndex = state.items.findIndex(
-                (item) => item.id === newItem.id
+                (item: AddedProduct) => item.id === newItem.id
             )
             if (existingItemIndex !== -1) {
                 const updatedItems = [...state.items]
@@ -41,7 +47,7 @@ const reducer = (state, action) => {
         case "deleteItem":
             const itemId = action.payload.id
             const updatedItems = state.items.filter(
-                (item) => item.id !== itemId
+                (item: AddedProduct) => item.id !== itemId
             )
             const totalPrice = getTotalPrice(updatedItems)
             return {
@@ -52,7 +58,7 @@ const reducer = (state, action) => {
             const quantityId = action.payload.id
             const newQuantity = action.payload.newQuantity
             const quantityIndex = state.items.findIndex(
-                (item) => item.id === quantityId
+                (item: AddedProduct) => item.id === quantityId
             )
             if (quantityIndex !== -1) {
                 const currentArray = [...state.items]
@@ -68,14 +74,16 @@ const reducer = (state, action) => {
     }
 }
 
-export function CartProvider({ children }) {
+export function CartProvider({ children }: ContextProviderProps) {
     const [cartState, cartDispatch] = useReducer(reducer, getInitialState())
 
     function getInitialState() {
         const cartData = localStorage.getItem("cart")
         if (cartData) {
             const parsedData = JSON.parse(cartData)
-            return parsedData
+            const items = parsedData.items || [] // fallback to empty array if items is undefined
+            const totalPrice = parsedData.totalPrice || 0 // fallback to 0 if totalPrice is undefined
+            return { items, totalPrice }
         }
         return { items: [], totalPrice: 0 }
     }
@@ -95,7 +103,14 @@ export function CartProvider({ children }) {
     }, [cartState])
 
     return (
-        <CartContext.Provider value={{ cartState, cartDispatch }}>
+        <CartContext.Provider
+            value={{
+                cartState,
+                cartDispatch,
+                items: cartState.items,
+                totalPrice: cartState.totalPrice,
+            }}
+        >
             {children}
         </CartContext.Provider>
     )

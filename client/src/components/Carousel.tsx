@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import Kayaks from "../assets/kayaks.jpg"
 import Lures from "../assets/lures.jpg"
@@ -41,7 +41,7 @@ const Carousel = () => {
     }
 
     return (
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-x-hidden shadow-xl">
             <div className="absolute top-1/2 z-10 flex w-full -translate-y-1/2 justify-between px-8 sm:px-12 md:px-16 lg:px-24">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

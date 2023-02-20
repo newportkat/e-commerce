@@ -1,18 +1,19 @@
 import React, { useContext, useState } from "react"
 import { Link } from "react-router-dom"
-import { ReactComponent as Anchor } from "../assets/anchor.svg"
-import { ReactComponent as Extra } from "../assets/extra.svg"
-import { ReactComponent as Fish } from "../assets/fish.svg"
-import { ReactComponent as Kayak } from "../assets/kayak.svg"
-import { ReactComponent as Lure } from "../assets/lure.svg"
-import { ReactComponent as Reel } from "../assets/reel.svg"
-import { ReactComponent as Rod } from "../assets/rod.svg"
+import Anchor from "../svgComponents/Anchor"
+import Extra from "../svgComponents/Extra"
+import Fish from "../svgComponents/Fish"
+import Kayak from "../svgComponents/Kayak"
+import Lure from "../svgComponents/Lure"
+import Reel from "../svgComponents/Reel"
+import Rod from "../svgComponents/Rod"
 import CartContext from "../context/CartContext"
 import { Product } from "../interfaces/interfaces"
 
 const Card = (props: Product) => {
-    const { cartDispatch } = useContext(CartContext)
-    const [quantity, setQuantity] = useState(1)
+const context = useContext(CartContext)
+const cartDispatch = context?.cartDispatch    
+const [quantity, setQuantity] = useState(1)
 
     let img
 
@@ -20,29 +21,29 @@ const Card = (props: Product) => {
 
     switch (props.category) {
         case "rods":
-            img = <Rod className={`${imgStyle}`} />
+            img = <Rod style={`${imgStyle}`} />
             break
         case "reels":
-            img = <Reel className={`${imgStyle}`} />
+            img = <Reel style={`${imgStyle}`} />
             break
         case "lures":
-            img = <Lure className={`${imgStyle}`} />
+            img = <Lure style={`${imgStyle}`} />
             break
         case "kayaks":
-            img = <Kayak className={`${imgStyle}`} />
+            img = <Kayak style={`${imgStyle}`} />
             break
         case "extras":
-            img = <Extra className={`${imgStyle}`} />
+            img = <Extra style={`${imgStyle}`} />
             break
         default:
-            img = <Anchor className={`${imgStyle}`} />
+            img = <Anchor style={`${imgStyle}`} />
     }
 
     return (
         <div className="flex flex-col gap-2 rounded text-gray-700">
             <Link to={`/product/${props.id}`} className="group relative">
                 {img}
-                <Fish className="absolute top-0 left-0 right-0 bottom-0 z-0 h-80 w-80 rounded bg-blue-500 p-6 group-hover:z-10" />
+                <Fish style="absolute top-0 left-0 right-0 bottom-0 z-0 h-80 w-80 rounded bg-blue-500 p-6 group-hover:z-10" />
                 {props.onSale ? (
                     <span className="absolute top-4 right-4 z-10 rounded bg-red-500 p-2 font-semibold text-white">
                         SALE!
@@ -107,7 +108,7 @@ const Card = (props: Product) => {
                     <button
                         className="rounded bg-gray-300 px-2 py-1 hover:bg-gray-400 active:bg-gray-300"
                         onClick={() =>
-                            cartDispatch({
+                            cartDispatch?.({
                                 type: "addItem",
                                 payload: { ...props, quantity: quantity },
                             })

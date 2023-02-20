@@ -1,20 +1,23 @@
 import axios from "axios"
 import React, { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { ReactComponent as Anchor } from "../assets/anchor.svg"
-import { ReactComponent as Extra } from "../assets/extra.svg"
-import { ReactComponent as Fish } from "../assets/fish.svg"
-import { ReactComponent as Hook } from "../assets/hook.svg"
-import { ReactComponent as Kayak } from "../assets/kayak.svg"
-import { ReactComponent as Lure } from "../assets/lure.svg"
-import { ReactComponent as Reel } from "../assets/reel.svg"
-import { ReactComponent as Rod } from "../assets/rod.svg"
+import Anchor from "../svgComponents/Anchor"
+import Extra from "../svgComponents/Extra"
+import Hook from "../svgComponents/Hook"
+import Fish from "../svgComponents/Fish"
+import Kayak from "../svgComponents/Kayak"
+import Lure from "../svgComponents/Lure"
+import Reel from "../svgComponents/Reel"
+import Rod from "../svgComponents/Rod"
 import CartContext from "../context/CartContext"
+import { Product } from "../interfaces/interfaces"
 
-const Product = () => {
-    const { cartDispatch } = useContext(CartContext)
+const SingleProduct = () => {
+const context = useContext(CartContext)
+const cartDispatch = context?.cartDispatch
+
     const productId = useParams().id
-    const [productData, setProductData] = useState()
+    const [productData, setProductData] = useState<Product | null>(null)
     const [selectedImg, setSelectedImg] = useState("img1")
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
@@ -24,7 +27,7 @@ const Product = () => {
         const getProductData = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:3000/product/${productId}`
+                    `http://localhost:3000/api/product/${productId}`
                 )
                 const data = res.data
                 setProductData(data)
@@ -38,7 +41,7 @@ const Product = () => {
         getProductData()
     }, [])
 
-    const productCategory = productData?.category
+    const productCategory: string | undefined = productData?.category
 
     const largeImgStyle = ""
     const smallImgStyle = ""
@@ -48,11 +51,11 @@ const Product = () => {
     switch (productCategory) {
         case "rods":
             largeCategoryImg = (
-                <Rod className="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
+                <Rod style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
                 <Rod
-                    className="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
@@ -62,11 +65,11 @@ const Product = () => {
 
         case "reels":
             largeCategoryImg = (
-                <Reel className="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
+                <Reel style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
                 <Reel
-                    className="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
@@ -76,11 +79,11 @@ const Product = () => {
 
         case "lures":
             largeCategoryImg = (
-                <Lure className="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
+                <Lure style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
                 <Lure
-                    className="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
@@ -90,11 +93,11 @@ const Product = () => {
 
         case "kayaks":
             largeCategoryImg = (
-                <Kayak className="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
+                <Kayak style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
                 <Kayak
-                    className="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
@@ -104,11 +107,11 @@ const Product = () => {
 
         case "extras":
             largeCategoryImg = (
-                <Extra className="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
+                <Extra style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
                 <Extra
-                    className="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
@@ -118,11 +121,11 @@ const Product = () => {
 
         default:
             largeCategoryImg = (
-                <Anchor className="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
+                <Anchor style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
                 <Anchor
-                    className="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
@@ -147,16 +150,16 @@ const Product = () => {
                             {selectedImg === "img1" ? (
                                 largeCategoryImg
                             ) : selectedImg === "img2" ? (
-                                <Fish className="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
+                                <Fish style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
                             ) : (
-                                <Hook className="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
+                                <Hook style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
                             )}
                         </div>
                         <div className="flex w-full justify-evenly sm:justify-end sm:gap-6">
                             <div>{smallCategoryImg}</div>
                             <div>
                                 <Fish
-                                    className="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
                                     onClick={() => {
                                         setSelectedImg("img2")
                                     }}
@@ -164,7 +167,7 @@ const Product = () => {
                             </div>
                             <div>
                                 <Hook
-                                    className="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
                                     onClick={() => {
                                         setSelectedImg("img3")
                                     }}
@@ -174,10 +177,10 @@ const Product = () => {
                     </div>
                     <div className="flex flex-col items-center gap-4 sm:h-full sm:w-1/2 sm:items-start">
                         <h1 className="border-b-2 border-black text-xl font-semibold">
-                            {productData.name}
+                            {productData?.name}
                         </h1>
                         <div>
-                            {productData.onSale ? (
+                            {productData?.onSale ? (
                                 <div className="flex gap-4 font-medium">
                                     <h2 className="font-bold">
                                         ${productData.discountedPrice}
@@ -188,7 +191,7 @@ const Product = () => {
                                 </div>
                             ) : (
                                 <h2 className="font-bold text-gray-700">
-                                    ${productData.price}
+                                    ${productData?.price}
                                 </h2>
                             )}
                         </div>
@@ -205,7 +208,7 @@ const Product = () => {
                                     -
                                 </button>
                             </div>
-                            <span className="w-2 text-center font-semibold mx-1">
+                            <span className="mx-1 w-2 text-center font-semibold">
                                 {quantity}
                             </span>
                             <div className="flex h-6 w-6 items-center justify-center rounded bg-gray-300 hover:bg-gray-400 active:bg-gray-300">
@@ -222,16 +225,19 @@ const Product = () => {
                         <button
                             className="rounded bg-gray-300 px-2 py-1 font-medium hover:bg-gray-400 active:bg-gray-300"
                             onClick={() =>
-                                cartDispatch({
+                                cartDispatch?.({
                                     type: "addItem",
-                                    payload: { ...productData, quantity: quantity },
+                                    payload: {
+                                        ...productData,
+                                        quantity: quantity,
+                                    },
                                 })
                             }
                         >
                             Add To Cart
                         </button>
                         <p className="my-4 w-10/12 tracking-wider sm:w-3/4">
-                            {productData.desc}
+                            {productData?.desc}
                         </p>
                     </div>
                 </div>
@@ -240,4 +246,4 @@ const Product = () => {
     )
 }
 
-export default Product
+export default SingleProduct

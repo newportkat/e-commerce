@@ -1,24 +1,27 @@
 import axios from "axios"
 import React, { useContext, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { ReactComponent as Anchor } from "../assets/anchor.svg"
-import { ReactComponent as Extra } from "../assets/extra.svg"
-import { ReactComponent as Fish } from "../assets/fish.svg"
-import { ReactComponent as Kayak } from "../assets/kayak.svg"
-import { ReactComponent as Lure } from "../assets/lure.svg"
-import { ReactComponent as Reel } from "../assets/reel.svg"
-import { ReactComponent as Rod } from "../assets/rod.svg"
+import Anchor from "../svgComponents/Anchor"
+import Extra from "../svgComponents/Extra"
+import Kayak from "../svgComponents/Kayak"
+import Lure from "../svgComponents/Lure"
+import Reel from "../svgComponents/Reel"
+import Rod from "../svgComponents/Rod"
 import CartContext from "../context/CartContext"
-import { Category } from "../interfaces/interfaces"
+import { AddedProduct, Category, NavbarProps } from "../interfaces/interfaces"
 
-const Navbar = (props) => {
+const Navbar = (props: NavbarProps) => {
     const [categories, setCategories] = useState([])
-    const { cartState, cartDispatch } = useContext(CartContext)
-   
+const context = useContext(CartContext)
+const cartState = context?.cartState
+const cartDispatch = context?.cartDispatch
+
     useEffect(() => {
         const getCategories = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/categories")
+                const res = await axios.get(
+                    "http://localhost:3000/api/categories"
+                )
                 const data = res.data
                 setCategories(data)
             } catch (error) {
@@ -86,27 +89,27 @@ const Navbar = (props) => {
                             d="M6 18L18 6M6 6l12 12"
                         />
                     </svg>
-                    {cartState.items.map((item) => {
+                    {cartState?.items.map((item: AddedProduct) => {
                         let img
                         const imgStyle = "h-12 w-12 rounded bg-blue-500 p-2"
                         switch (item.category) {
                             case "rods":
-                                img = <Rod className={`${imgStyle}`} />
+                                img = <Rod style={`${imgStyle}`} />
                                 break
                             case "reels":
-                                img = <Reel className={`${imgStyle}`} />
+                                img = <Reel style={`${imgStyle}`} />
                                 break
                             case "lures":
-                                img = <Lure className={`${imgStyle}`} />
+                                img = <Lure style={`${imgStyle}`} />
                                 break
                             case "kayaks":
-                                img = <Kayak className={`${imgStyle}`} />
+                                img = <Kayak style={`${imgStyle}`} />
                                 break
                             case "extras":
-                                img = <Extra className={`${imgStyle}`} />
+                                img = <Extra style={`${imgStyle}`} />
                                 break
                             default:
-                                img = <Anchor className={`${imgStyle}`} />
+                                img = <Anchor style={`${imgStyle}`} />
                         }
 
                         return (
@@ -126,9 +129,9 @@ const Navbar = (props) => {
                                             viewBox="0 0 24 24"
                                             strokeWidth={1.5}
                                             stroke="currentColor"
-                                            className="h-5 w-5 cursor-pointer text-blue-900 hover:text-red-500"
+                                            className="h-5 w-5 cursor-pointer text-blue-300 hover:text-red-500"
                                             onClick={() => {
-                                                cartDispatch({
+                                                cartDispatch?.({
                                                     type: "deleteItem",
                                                     payload: { ...item },
                                                 })
@@ -157,7 +160,7 @@ const Navbar = (props) => {
                     })}
                 </div>
                 <p>
-                    TOTAL: $<span>{cartState.totalPrice.toFixed(2)}</span>
+                    TOTAL: $<span>{cartState?.totalPrice.toFixed(2)}</span>
                 </p>
                 <Link
                     to="/checkout"
@@ -207,7 +210,7 @@ const Navbar = (props) => {
                     </svg>
                     <div className="absolute -top-1 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 p-2">
                         <span className="text-xs font-semibold">
-                            {cartState.items.length}
+                            {cartState?.items.length}
                         </span>
                     </div>
                 </div>

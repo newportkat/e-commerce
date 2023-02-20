@@ -19,15 +19,15 @@ app.use(cors())
 const bodyParser = require("body-parser")
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get("/categories", (req, res) => {
+app.get("/api/categories", (req, res) => {
     res.send(categories)
 })
 
-app.get("/products", (req, res) => {
+app.get("/api/products", (req, res) => {
     res.send(products)
 })
 
-app.get("/product/:id", (req, res) => {
+app.get("/api/product/:id", (req, res) => {
     const productId = req.params.id
     const product = products.find((product) => product.id === productId)
     if (product) {

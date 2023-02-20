@@ -1,9 +1,9 @@
 import React from "react"
-import { ReactComponent as Amex } from "../assets/amex.svg"
-import { ReactComponent as Bitcoin } from "../assets/bitcoin.svg"
-import { ReactComponent as Mastercard } from "../assets/mastercard.svg"
-import { ReactComponent as PayPal } from "../assets/paypal.svg"
-import { ReactComponent as Visa } from "../assets/visa.svg"
+import MasterCard from "../svgComponents/MasterCard"
+import Amex from "../svgComponents/Amex"
+import Bitcoin from "../svgComponents/Bitcoin"
+import PayPal from "../svgComponents/PayPal"
+import Visa from "../svgComponents/Visa"
 
 const Footer = () => {
     return (
@@ -37,11 +37,11 @@ const Footer = () => {
                     PAYMENT OPTIONS
                 </h1>
                 <div className="flex gap-6">
-                    <Amex className="h-8 w-8" />
-                    <Bitcoin className="h-8 w-8" />
-                    <Mastercard className="h-8 w-8" />
-                    <PayPal className="h-8 w-8" />
-                    <Visa className="h-8 w-8" />
+                    <Amex style="h-8 w-8" />
+                    <Bitcoin style="h-8 w-8" />
+                    <MasterCard style="h-8 w-8" />
+                    <PayPal style="h-8 w-8" />
+                    <Visa style="h-8 w-8" />
                 </div>
             </div>
         </div>

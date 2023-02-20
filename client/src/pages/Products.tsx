@@ -3,6 +3,7 @@ import { nanoid } from "nanoid"
 import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import Card from "../components/Card"
+import { Product } from "../interfaces/interfaces"
 
 const Products = () => {
     const initialCategory = useParams().id
@@ -10,41 +11,47 @@ const Products = () => {
     const [products, setProducts] = useState([])
     const [filteredProducts, setFilteredProducts] = useState([])
 
-    const filterByCategory = (category) => {
+    const filterByCategory = (category: string) => {
         const filteredProducts = products.filter(
-            (product) => product.category === category
+            (product: Product) => product.category === category
         )
         setFilteredProducts(filteredProducts)
 
-        const sortedProducts = [...filteredProducts].sort((a, b) => {
-            let aPrice = a.onSale ? a.discountedPrice : a.price
-            let bPrice = b.onSale ? b.discountedPrice : b.price
+        const sortedProducts = [...filteredProducts].sort(
+            (a: Product, b: Product) => {
+                let aPrice = a.onSale ? a.discountedPrice : a.price
+                let bPrice = b.onSale ? b.discountedPrice : b.price
 
-            if (order === "asc") {
-                return aPrice - bPrice
-            } else {
-                return bPrice - aPrice
+                if (order === "asc") {
+                    return aPrice - bPrice
+                } else {
+                    return bPrice - aPrice
+                }
             }
-        })
+        )
 
         setFilteredProducts(sortedProducts)
     }
 
     const sortByPrice = () => {
-        const sortedProducts = [...filteredProducts].sort((a, b) => {
-            if (order === "des") {
-                return a.price - b.price
-            } else {
-                return b.price - a.price
+        const sortedProducts = [...filteredProducts].sort(
+            (a: Product, b: Product) => {
+                if (order === "des") {
+                    return a.price - b.price
+                } else {
+                    return b.price - a.price
+                }
             }
-        })
+        )
         setFilteredProducts(sortedProducts)
     }
 
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/products")
+                const res = await axios.get(
+                    "http://localhost:3000/api/products"
+                )
                 const data = res.data
                 setProducts(data)
                 setFilteredProducts(data)
@@ -62,7 +69,7 @@ const Products = () => {
     }, [initialCategory, products])
 
     return (
-        <div className="flex flex-col items-center gap-6 pb-8 px-8 sm:pb-14">
+        <div className="flex flex-col items-center gap-6 px-8 pb-8 sm:pb-14">
             <div className="flex w-full justify-around p-4 sm:justify-center sm:gap-14">
                 <div className="flex flex-col gap-1">
                     <h1 className="py-1 px-2">Category</h1>
@@ -95,7 +102,7 @@ const Products = () => {
                 </div>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-14">
-                {filteredProducts.map((product) => (
+                {filteredProducts.map((product: Product) => (
                     <Card key={product.id} {...product} />
                 ))}
             </div>

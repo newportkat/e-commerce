@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
-import Cart from "./components/Cart"
 import Footer from "./components/Footer"
 import Navbar from "./components/Navbar"
 import Socials from "./components/Socials"
 import Checkout from "./pages/Checkout"
 import Error from "./pages/Error"
 import Home from "./pages/Home"
-import Product from "./pages/Product"
+import SingleProduct from "./pages/SingleProduct"
 import Products from "./pages/Products"
 
 const Layout = () => {
@@ -81,7 +80,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/product/:id",
-                element: <Product />,
+                element: <SingleProduct />,
             },
             {
                 path: "/checkout",
