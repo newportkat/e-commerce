@@ -1,20 +1,20 @@
 import axios from "axios"
 import React, { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import CartContext from "../context/CartContext"
+import { Product } from "../interfaces/interfaces"
 import Anchor from "../svgComponents/Anchor"
 import Extra from "../svgComponents/Extra"
-import Hook from "../svgComponents/Hook"
 import Fish from "../svgComponents/Fish"
+import Hook from "../svgComponents/Hook"
 import Kayak from "../svgComponents/Kayak"
 import Lure from "../svgComponents/Lure"
 import Reel from "../svgComponents/Reel"
 import Rod from "../svgComponents/Rod"
-import CartContext from "../context/CartContext"
-import { Product } from "../interfaces/interfaces"
 
 const SingleProduct = () => {
-const context = useContext(CartContext)
-const cartDispatch = context?.cartDispatch
+    const context = useContext(CartContext)
+    const cartDispatch = context?.cartDispatch
 
     const productId = useParams().id
     const [productData, setProductData] = useState<Product | null>(null)
@@ -54,12 +54,13 @@ const cartDispatch = context?.cartDispatch
                 <Rod style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
-                <Rod
-                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                <div
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
-                />
+                >
+                    <Rod style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2" />
+                </div>
             )
             break
 
@@ -68,12 +69,13 @@ const cartDispatch = context?.cartDispatch
                 <Reel style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
-                <Reel
-                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                <div
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
-                />
+                >
+                    <Reel style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2" />
+                </div>
             )
             break
 
@@ -82,12 +84,13 @@ const cartDispatch = context?.cartDispatch
                 <Lure style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
-                <Lure
-                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                <div
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
-                />
+                >
+                    <Lure style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2" />
+                </div>
             )
             break
 
@@ -96,12 +99,13 @@ const cartDispatch = context?.cartDispatch
                 <Kayak style="h-80 w-80 cursor-pointer rounded bg-blue-500 p-4 lg:h-[30rem] lg:w-[30rem]" />
             )
             smallCategoryImg = (
-                <Kayak
-                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
+                <div
                     onClick={() => {
                         setSelectedImg("img1")
                     }}
-                />
+                >
+                    <Kayak style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2" />
+                </div>
             )
             break
 
@@ -157,21 +161,19 @@ const cartDispatch = context?.cartDispatch
                         </div>
                         <div className="flex w-full justify-evenly sm:justify-end sm:gap-6">
                             <div>{smallCategoryImg}</div>
-                            <div>
-                                <Fish
-                                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
-                                    onClick={() => {
-                                        setSelectedImg("img2")
-                                    }}
-                                />
+                            <div
+                                onClick={() => {
+                                    setSelectedImg("img2")
+                                }}
+                            >
+                                <Fish style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2" />
                             </div>
-                            <div>
-                                <Hook
-                                    style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2"
-                                    onClick={() => {
-                                        setSelectedImg("img3")
-                                    }}
-                                />
+                            <div
+                                onClick={() => {
+                                    setSelectedImg("img3")
+                                }}
+                            >
+                                <Hook style="h-16 w-16 cursor-pointer rounded bg-blue-500 p-2" />
                             </div>
                         </div>
                     </div>
